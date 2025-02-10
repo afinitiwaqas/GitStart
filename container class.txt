@@ -1,0 +1,129 @@
+import java.awt.Dimension;
+import java.time.Duration;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.ElementNotInteractableException;
+import javax.net.ssl.SSLEngineResult.HandshakeStatus;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import loginPage.pageobjects.designerPage;
+import loginPage.pageobjects.loginPage;
+
+public class ContainerVerification {
+
+	public static void main(String[] args) throws InterruptedException {
+		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+	    loginPage loginPage = new loginPage(driver); 
+	    loginPage.goTo();
+	    loginPage.loginApplication("reportingagent1","P@ssword1111");
+		loginPage.screenSetup();
+		designerPage reportSetting = new designerPage(driver);
+		reportSetting.reportSettings("Automated", "Automated Report");
+	   
+	    /*
+	    driver.findElement(By.className("layout_layout__main__Q3uyN")).click();
+	    driver.findElement(By.className("neo-btn-primary")).click();
+	   
+	    driver.findElement(By.xpath("(//input[@class='MuiInputBase-input MuiOutlinedInput-input'])[1]")).sendKeys("Automated Report");
+	    driver.findElement(By.cssSelector(".MuiOutlinedInput-multiline")).click();
+	    driver.findElement(By.cssSelector("textarea[class*='MuiInputBase']")).sendKeys("Automated Report");
+	    driver.findElement(By.cssSelector(".fqLUBq")).click();
+	    driver.findElement(By.cssSelector(" li[data-value='HISTORICAL']")).click();
+	    driver.findElement(By.xpath("//div[contains(text(),'Voice')]")).click();
+	    driver.findElement(By.cssSelector("li[data-value='OMNI']")).click();
+	    driver.findElement(By.xpath("//div[contains(text(),'Agent Group')]")).click();
+	    driver.findElement(By.cssSelector("li[data-value='AGENT_GROUP']")).click();
+	    driver.findElement(By.xpath("//div[contains(text(),'Daily')]")).click();
+	    driver.findElement(By.xpath("//li[@data-value='DAILY']")).click();
+	    driver.findElement(By.xpath("//div[contains(text(),'Range')]")).click();
+	    driver.findElement(By.xpath("//body/div[@id='menu-']/div[3]/ul[1]/li[2]")).click();
+	    driver.findElement(By.xpath("//div[contains(text(),'None')]")).click();
+	    driver.findElement(By.xpath("//body/div[@id='menu-']/div[3]/ul[1]/li[2]")).click();
+	    driver.findElement(By.xpath("//label[@class='MuiFormControlLabel-root']")).click();
+	    driver.findElement(By.xpath("//label[@class='MuiFormControlLabel-root'] [2]")).click();
+	    driver.findElement(By.xpath("//button[text()='Next']")).click();
+	    driver.findElement(By.id("custom")).click();
+		driver.findElement(By.cssSelector(".MuiOutlinedInput-adornedEnd")).click();
+		Thread.sleep(2000);
+		Actions a = new Actions(driver);
+		a.sendKeys("automated").build().perform();
+		Thread.sleep(5000);
+		driver.findElement(By.cssSelector(".neo-icon-edit")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//li[@data-type='TABLE']")).click();
+		Thread.sleep(2000);
+	    WebElement Source = driver.findElement(By.xpath("//li[@data-type='TABLE']"));
+	    Thread.sleep(2000);
+	    a.dragAndDropBy(Source, 600, 500).build().perform();
+	    driver.findElement(By.cssSelector(".neo-icon-edit")).click();
+	    Thread.sleep(2000);
+	    driver.findElement(By.xpath("//input[@value='New Table']")).click();
+	    a.click(driver.findElement(By.xpath("//input[@value='New Table']"))).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE)
+	    .sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys("Omni Historical Table").build().perform();
+	    Thread.sleep(2000);
+	    
+	    int count = 0;
+	    for(int j = count ; j<=15; j++)
+	    {
+	    driver.findElement(By.cssSelector(".neo-icon-add")).click(); 
+	 	
+	 	}  
+	    
+	    List<WebElement> editColumn = driver.findElements(By.xpath("//button[@title='Edit Column']")); //edit column
+	    
+	    
+	    for(int i=0; i<editColumn.size();i++)
+	    {
+	    	
+	    	  
+	   editColumn.get(i).click();
+	    
+	    driver.findElement(By.cssSelector(".formula_formula__button__a7men")).click(); 
+	    Thread.sleep(500);
+	    driver.findElement(By.xpath("//button[@title='Open'][1]")).click();
+	    Thread.sleep(1000);	   
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+	    WebElement element = wait.until(
+		ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[@role='option']")));
+	   	WebElement elmentClick =  driver.findElements(By.xpath("//li[@role='option']")).get(i+1);
+        a.sendKeys(Keys.ENTER).build().perform();
+	    Thread.sleep(100);
+	    a.click(elmentClick).build().perform();
+	    Thread.sleep(100);
+	    String colName = driver.findElement(By.xpath("//div[@class='formula-display_formula-display__formula-content__KYDHC']")).getText();
+	    Thread.sleep(100);
+	    driver.findElement(By.xpath("//button[text()='Next']")).click();
+	    Thread.sleep(100);
+	    driver.findElement(By.xpath("//input[@value='New Column']")).click();
+	    Thread.sleep(1000);
+	    a.sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE)
+	    .sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).sendKeys(Keys.BACK_SPACE).perform();
+	    Thread.sleep(100);
+	    driver.findElement(By.xpath("//input[@class='MuiInputBase-input MuiOutlinedInput-input']")).sendKeys(colName);
+	   
+	    if(count>editColumn.size())
+ 	   {
+	    	break;
+ 	   }
+	  }
+	    
+	 
+	    System.out.println("I am out of for loop");
+       
+	    driver.findElement(By.xpath("//button[text()='Save']")).click();
+	    driver.findElement(By.xpath("//button[text()='Close']")).click();
+	    driver.close();
+	   */
+
+	}
+
+}
